@@ -16,9 +16,9 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
-        "@mediapipe/tasks-vision": "https://registry.npmmirror.com/@mediapipe/tasks-vision/1.2.3/files/vision_bundle.mjs"
+        "three": "./vendor/three.module.js",
+        "three/addons/": "./vendor/addons/",
+        "@mediapipe/tasks-vision": "./vendor/mediapipe/vision_bundle.js"
       }
     }
   </script>
@@ -421,6 +421,11 @@
     // Prefer CDN assets for the permanent single-file deployment. Local files
     // remain as the final fallback when the full companion-assets bundle is hosted.
     const MEDIAPIPE_RUNTIMES = [
+      {
+        label: 'same-origin',
+        moduleUrl: new URL('./vendor/mediapipe/vision_bundle.js', document.baseURI).href,
+        wasmUrl: new URL('./vendor/mediapipe/wasm', document.baseURI).href
+      },
       // npmmirror is materially faster and more reliable for mobile users in
       // mainland China. Keep international CDNs as ordered fallbacks.
       {
